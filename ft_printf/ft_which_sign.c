@@ -6,17 +6,22 @@
 /*   By: iarrar <iarrar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:09:49 by iarrar            #+#    #+#             */
-/*   Updated: 2023/04/26 18:12:03 by iarrar           ###   ########.fr       */
+/*   Updated: 2024/02/04 15:28:17 by iarrar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_which_sign(va_list *args, char c)
+// Function to handle individual format specifiers in printf
+int ft_which_sign(va_list *args, char c)
 {
-	int	i;
+	// Variable to store the return value
+	int i;
 
+	// Initialize return value
 	i = 0;
+
+	// Check the format specifier and call the corresponding function
 	if (c == 'c')
 		i = ft_putchar_fd(va_arg(*args, int), 1);
 	if (c == 's')
@@ -35,5 +40,7 @@ int	ft_which_sign(va_list *args, char c)
 		i = ft_putnbru_base(va_arg(*args, int), 1, "0123456789ABCDEF");
 	if (c == '%')
 		i = ft_putchar_fd('%', 1);
+
+	// Return the length of the printed value
 	return (i);
 }
