@@ -3,38 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   pathfinder.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iarrar <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: iarrar <iarrar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 21:01:07 by iarrar            #+#    #+#             */
-/*   Updated: 2023/09/04 21:01:10 by iarrar           ###   ########.fr       */
+/*   Updated: 2024/02/06 00:23:52 by iarrar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solong.h"
 
+/*
+** Recursive function to mark visited cells in the map.
+**
+** Parameters:
+** - map: The game map.
+** - x: The x-coordinate of the current cell.
+** - y: The y-coordinate of the current cell.
+** - data: A pointer to the game data structure.
+*/
 void	ft_check(char **map, int x, int y, t_data *data)
 {
+	// Check if the current cell is not a wall ('1')
 	if (map[y][x] != '1')
 	{
+		// Update flags based on cell content
 		if (map[y][x] == 'E')
 			data->e = 0;
 		if (map[y][x] == 'P')
 			data->p = 0;
+
+		// Mark the current cell as visited ('1')
 		map[y][x] = '1';
-		if (data->e == 0 && data->p == 0 && ft_cookiz(map) == 0)
-		{
-			data->r = 0;
-			return ;
-		}
+
+		// Check adjacent cells recursively
 		ft_check(map, x - 1, y, data);
 		ft_check(map, x + 1, y, data);
 		ft_check(map, x, y - 1, data);
 		ft_check(map, x, y + 1, data);
-		return ;
+
+		return;
 	}
 	else
-		return ;
+		return;
 }
+
 
 char	**ft_tabtabstrdup(char **tab)
 {
@@ -51,6 +63,15 @@ char	**ft_tabtabstrdup(char **tab)
 	return (dest);
 }
 
+/*
+** Pathfinder function to check if the map is solvable.
+**
+** Parameters:
+** - data: A pointer to the game data structure.
+**
+** Returns:
+** 0 if the map is solvable, 1 otherwise.
+*/
 int	ft_pathfinder(t_data *data)
 {
 	int		x;
@@ -62,11 +83,20 @@ int	ft_pathfinder(t_data *data)
 	data->e = 1;
 	data->p = 1;
 	data->r = 1;
+
+	// Create a duplicate of the original map
 	map = ft_tabtabstrdup(data->map);
+
+	// Use recursive function to mark visited cells and update flags
 	ft_check(map, x, y, data);
+
+	// Free the duplicated map
 	ft_freetabtab(map);
+
+	// If 'data->r' is 0, the map is solvable
 	if (data->r == 0)
 		return (0);
 	else
 		return (1);
 }
+

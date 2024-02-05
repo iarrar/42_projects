@@ -6,12 +6,31 @@
 /*   By: iarrar <iarrar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 15:45:32 by iarrar            #+#    #+#             */
-/*   Updated: 2023/08/28 15:13:50 by iarrar           ###   ########.fr       */
+/*   Updated: 2024/02/06 00:18:39 by iarrar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solong.h"
 
+/*
+** The main function serves as the entry point for the program.
+**
+** Parameters:
+** - argc: Number of command-line arguments.
+** - argv: Array of command-line arguments.
+**
+** Actions:
+** 1. Check if the correct number of command-line arguments is provided, and if the file extension is valid.
+** 2. Read the map from the file into the data structure.
+** 3. Initialize the game, checking for errors and displaying appropriate messages.
+** 4. Check for errors in the map and exit if any are found.
+** 5. Perform pathfinding to ensure that all collectible items are reachable.
+** 6. Display the initial state of the game.
+** 7. Set up event hooks for handling key presses and window close events.
+** 8. Enter the main event loop using mlx_loop.
+**
+** Note: This main function seems well-organized and follows a modular structure.
+*/
 int	main(int argc, char **argv)
 {
 	t_data	data;
@@ -29,7 +48,7 @@ int	main(int argc, char **argv)
 	}
 	if (ft_pathfinder(&data))
 	{
-		ft_putstr_fd("Error : Tous les items ne sont pas collectibles\n", 2);
+		ft_putstr_fd("Error: Not all items are collectible\n", 2);
 		ft_ciao(&data);
 		return (0);
 	}
@@ -39,3 +58,4 @@ int	main(int argc, char **argv)
 	mlx_loop(data.mlx_ptr);
 	return (0);
 }
+

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   creamap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iarrar <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: iarrar <iarrar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 19:06:24 by iarrar            #+#    #+#             */
-/*   Updated: 2023/08/31 19:06:27 by iarrar           ###   ########.fr       */
+/*   Updated: 2024/02/06 00:16:09 by iarrar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,26 @@ void	ft_freetabtab(char **map)
 	free(map);
 }
 
+/*
+** The function handle_input processes the input keys and performs corresponding actions.
+**
+** Parameters:
+** - keysym: The key symbol representing the pressed key.
+** - data: A pointer to the data structure containing information about the game state.
+**
+** Actions:
+** - If the 'a' key is pressed, move the player left.
+** - If the 's' key is pressed, move the player down.
+** - If the 'w' key is pressed, move the player up.
+** - If the 'd' key is pressed, move the player right.
+** - Update the display with the current game state.
+** - Print the total number of moves.
+** - If the game is won or the 'Escape' key is pressed, display the corresponding message
+**   and exit the game.
+**
+** Returns:
+** Always returns 0.
+*/
 int	handle_input(int keysym, t_data *data)
 {
 	if (keysym == XK_a)
@@ -81,6 +101,27 @@ int	handle_input(int keysym, t_data *data)
 	return (0);
 }
 
+/*
+** The function get_map reads the content of the specified file and populates
+** the data structure with the map information.
+**
+** Parameters:
+** - str: The name of the file containing the map.
+** - data: A pointer to the data structure containing information about the game state.
+**
+** Actions:
+** - Allocate memory for a buffer and read the content of the file into the buffer.
+** - If the file doesn't exist or there is an error reading it, print an error message
+**   and return 0.
+** - If the file is empty, free the allocated memory and return 0.
+** - Duplicate the content of the buffer into data->str.
+** - Split the content of data->str into lines using '\n' as a delimiter and store
+**   the result in data->map.
+** - Free the allocated memory for the buffer.
+**
+** Returns:
+** The total number of characters read from the file.
+*/
 int	get_map(char *str, t_data *data)
 {
 	int		ret;
@@ -109,3 +150,4 @@ int	get_map(char *str, t_data *data)
 		free(data->str);
 	return (total_len);
 }
+

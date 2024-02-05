@@ -3,29 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   mouvements.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iarrar <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: iarrar <iarrar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 17:48:23 by iarrar            #+#    #+#             */
-/*   Updated: 2023/08/28 17:48:27 by iarrar           ###   ########.fr       */
+/*   Updated: 2024/02/06 00:22:45 by iarrar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solong.h"
 
+/*
+** Move the player to the left on the game map if the destination is not a wall ('1').
+**
+** Parameters:
+** - data: A pointer to the game data structure.
+**
+** Returns:
+** - 1 if the player is successfully moved to the left.
+** - 0 if the destination is a wall, and no movement occurs.
+*/
 int	move_left(t_data *data)
 {
 	if (data->map[data->player.posy][data->player.posx - 1] != '1')
 	{
+		// Update map after moving the player
 		data->map[data->player.posy][data->player.posx] = '0';
 		data->map[data->exit.posy][data->exit.posx] = 'E';
 		data->map[data->player.posy][data->player.posx - 1] = 'P';
+		
+		// Update player's position
 		data->player.posx--;
-		data->count ++;
-		return (1);
+		
+		// Increment move count
+		data->count++;
+
+		return (1); // Successful move
 	}
 	else
-		return (0);
+		return (0); // Wall encountered, no movement
 }
+
 
 int	move_right(t_data *data)
 {
